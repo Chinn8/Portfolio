@@ -1,0 +1,388 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* border: 1px solid green; */
+
+  background-size: cover;
+}
+
+nav {
+  width: 100vw;
+  height: 10vh;
+  position: fixed;
+  background-color: rgb(39, 40, 42);
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
+
+nav ul {
+  height: 100%;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contents {
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+}
+
+.mainpg {
+  width: 100vw;
+  height: 100vh;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainpg img {
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.8;
+  margin-top: 2vh;
+  z-index: -1;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.mainpg .text {
+  color: black;
+  position: absolute;
+  margin: 10%;
+}
+
+.abtme {
+  width: 100vw;
+  height: 100vh;
+  /* border: 1px solid blue; */
+  background-image: linear-gradient(to right, #0c8bec, white);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.abt1 {
+  width: 50%;
+  height: 100%;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.abt2 {
+  width: 50%;
+  height: 100%;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: large;
+}
+
+.abt2 h1 {
+  font-size: 2.5em;
+}
+
+.abt2>* {
+  margin: 1em;
+}
+
+.me1 {
+  width: 40%;
+  height: 40%;
+  overflow: hidden;
+  border-radius: 40px;
+  z-index: 4;
+  margin-right: 20%;
+  position: relative;
+}
+
+.me2 {
+  width: 40%;
+  height: 40%;
+  overflow: hidden;
+  position: relative;
+  margin-left: 20%;
+  z-index: 5;
+  border-radius: 40px;
+}
+
+.b1 {
+  width: 22%;
+  height: 45%;
+  background-image: linear-gradient(to top, black, gray);
+  overflow: hidden;
+  position: absolute;
+  margin-top: -20%;
+  margin-left: -12%;
+  z-index: 2;
+  border-radius: 40px;
+}
+
+.b2 {
+  width: 22%;
+  height: 45%;
+  overflow: hidden;
+  background-image: linear-gradient(to top, #ff003c, orange);
+  position: absolute;
+  margin-top: 19%;
+  margin-left: 8%;
+  z-index: 4;
+  border-radius: 40px;
+}
+
+.edu {
+  width: 100vw;
+  height: 100vh;
+  /* border: 1px solid blue; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-image: linear-gradient(to right, #c7e0d8, white);
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: 22px;
+  padding: 20px;
+}
+
+.edu h1 {
+  margin-left: 10%;
+}
+
+.educards {
+  width: 100vw;
+  height: 100%;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.edu1 {
+  width: 30%;
+  height: 80%;
+  background-color: white;
+  box-shadow: 3px 7px 5px 6px rgb(44, 43, 43);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.edu2 {
+  width: 30%;
+  height: 80%;
+  background-color: white;
+  box-shadow: 3px 7px 5px 6px rgb(44, 43, 43);
+  border-radius: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.edu3 {
+  width: 30%;
+  height: 80%;
+  background-color: white;
+  box-shadow: 3px 7px 5px 6px rgb(44, 43, 43);
+  border-radius: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  /* } */
+}
+
+.edu1>* {
+  margin: 0.5em;
+}
+
+.edu2>* {
+  margin: 1em;
+}
+
+.edu3>* {
+  margin: 1em;
+}
+
+.edu1 img {
+  width: 65%;
+  height: 40%;
+  box-shadow: 5px 5px 5px 5px rgb(110, 105, 101);
+  border-radius: 30px;
+}
+
+.edu2 img {
+  width: 65%;
+  height: 43%;
+  box-shadow: 5px 5px 5px 5px rgb(110, 105, 101);
+  border-radius: 30px;
+}
+
+.Tech {
+  width: 100vw;
+  height: 80vh;
+  /* border: 1px solid blue; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-image: linear-gradient(to right, #77cbed, white);
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: 1.5em;
+}
+
+.Tech h1 {
+  margin-left: 10%;
+  /* border: 1px solid blue; */
+}
+
+.Techcards {
+  /* border: 1px solid blue; */
+  width: 80vw;
+  height: 30%;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 2px;
+}
+
+.t1 {
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  padding-left: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 70px;
+
+}
+
+.Techcards :hover {
+  background-color: #1685c1;
+}
+
+.headimg {
+  font-family: "Roboto";
+  height: 60px;
+  width: 60px;
+}
+
+.contact>* {
+  /* margin: 1em; */
+  background-image: linear-gradient(to right, #81e8cb, white);
+}
+
+.contact h1 {
+  padding-left: 10%;
+  padding-bottom: 5%;
+  /* border: 1px solid blue; */
+  font-size: 3em;
+}
+
+.coninfo {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.5em;
+  padding-bottom: 100px;
+}
+
+/* General styles for the certificates and internships section */
+.certificates-and-internships {
+  background-color: #f8f9fa;
+  /* Light background color for contrast */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Styling the section heading */
+.certificates-and-internships h1 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Styling each certificate/internship entry */
+.certificates-and-internships p {
+  color: #555;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+/* Styling the images */
+.certificates-and-internships img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Adding hover effect to images */
+.certificates-and-internships img:hover {
+  border-color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .certificates-and-internships {
+    padding: 15px;
+  }
+
+  .certificates-and-internships h1 {
+    font-size: 20px;
+  }
+
+  .certificates-and-internships p {
+    font-size: 14px;
+  }
+}
+
+.footimg {
+  height: 30px;
+  width: 30px;
+}
