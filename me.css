@@ -19,10 +19,11 @@ nav {
   background-color: rgb(39, 40, 42);
   color: white;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   z-index: 10;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 0 20px;
 }
 
 nav ul {
@@ -146,7 +147,8 @@ nav ul li a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.me1 img, .me2 img {
+.me1 img,
+.me2 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -211,7 +213,9 @@ nav ul li a:hover {
   flex-wrap: wrap;
 }
 
-.edu1, .edu2, .edu3 {
+.edu1,
+.edu2,
+.edu3 {
   width: 30%;
   min-height: 450px;
   background-color: white;
@@ -226,12 +230,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 
-.edu1:hover, .edu2:hover, .edu3:hover {
+.edu1:hover,
+.edu2:hover,
+.edu3:hover {
   transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.edu1 img, .edu2 img, .edu3 img {
+.edu1 img,
+.edu2 img,
+.edu3 img {
   width: 90%;
   height: 200px;
   object-fit: cover;
@@ -240,14 +248,18 @@ nav ul li a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.edu1 h2, .edu2 h2, .edu3 h2 {
+.edu1 h2,
+.edu2 h2,
+.edu3 h2 {
   font-size: 1.5em;
   margin-bottom: 15px;
   text-align: center;
   color: #333;
 }
 
-.edu1 p, .edu2 p, .edu3 p {
+.edu1 p,
+.edu2 p,
+.edu3 p {
   font-size: 1em;
   margin-bottom: 10px;
   text-align: center;
@@ -308,7 +320,8 @@ nav ul li a:hover {
   color: white;
 }
 
-.t1:hover h3, .t1:hover p {
+.t1:hover h3,
+.t1:hover p {
   color: white;
 }
 
@@ -457,7 +470,8 @@ nav ul li a:hover {
   border-left: 4px solid #0c8bec;
 }
 
-.extra-item p, .extra-item P {
+.extra-item p,
+.extra-item P {
   font-size: 1.1em;
   color: #333;
   line-height: 1.6;
@@ -542,13 +556,16 @@ footer {
     flex-direction: column;
     padding: 30px 5%;
   }
-  
-  .abt1, .abt2 {
+
+  .abt1,
+  .abt2 {
     width: 100%;
     margin-bottom: 30px;
   }
-  
-  .edu1, .edu2, .edu3,
+
+  .edu1,
+  .edu2,
+  .edu3,
   .t1,
   .project-card,
   .cert-item {
@@ -558,31 +575,82 @@ footer {
 
 @media (max-width: 768px) {
   .contents {
-    width: 90%;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: rgb(39, 40, 42);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.3s ease;
+    padding-top: 80px;
   }
-  
+
+  .contents.active {
+    right: 0;
+  }
+
   nav ul li {
-    padding: 0 8px;
+    padding: 15px 0;
+    width: 100%;
+    text-align: center;
   }
-  
+
   .mainpg .text h1 {
     font-size: 2.5rem;
   }
-  
-  .edu1, .edu2, .edu3,
+
+  .edu1,
+  .edu2,
+  .edu3,
   .t1,
   .project-card,
   .cert-item {
     width: 100%;
   }
-  
+
   /* Make extracircular section responsive */
   .extracinfo {
     grid-template-columns: 1fr;
   }
-  
-  .Tech, .projects, .certificates-and-internships, .extracircular, .contact {
+
+  .Tech,
+  .projects,
+  .certificates-and-internships,
+  .extracircular,
+  .contact {
     padding: 30px 5%;
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 100;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
   }
 }
 
@@ -591,25 +659,89 @@ footer {
     height: auto;
     padding: 10px 0;
   }
-  
+
   .contents {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     height: auto;
   }
-  
+
   nav ul li {
-    padding: 8px 0;
+    padding: 15px 0;
   }
-  
+
   .mainpg .text {
     padding: 15px;
   }
-  
+
   .mainpg .text h1 {
     font-size: 2rem;
   }
-  
-  .abt2 h1, .edu h1, .Tech h1, .projects h1, .certificates-and-internships h1, .extracircular h1, .contact h1 {
+
+  .abt2 h1,
+  .edu h1,
+  .Tech h1,
+  .projects h1,
+  .certificates-and-internships h1,
+  .extracircular h1,
+  .contact h1 {
     font-size: 2em;
+  }
+
+  /* Adjust image sizes for mobile */
+  .me1,
+  .me2 {
+    width: 60%;
+    height: 30%;
+    margin: 0 auto;
+  }
+
+  .b1,
+  .b2 {
+    display: none;
+  }
+
+  /* Adjust project cards for mobile */
+  .project-card {
+    padding: 15px;
+  }
+
+  /* Adjust certificate items for mobile */
+  .cert-item {
+    padding: 15px;
+  }
+
+  /* Adjust contact section for mobile */
+  .coninfo {
+    padding: 20px;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 480px) {
+  .mainpg .text h1 {
+    font-size: 1.8rem;
+  }
+
+  .abt2 h1,
+  .edu h1,
+  .Tech h1,
+  .projects h1,
+  .certificates-and-internships h1,
+  .extracircular h1,
+  .contact h1 {
+    font-size: 1.8em;
+  }
+
+  .abt2 p,
+  .edu1 p,
+  .edu2 p,
+  .edu3 p,
+  .t1 p,
+  .project-card p,
+  .cert-item p,
+  .extra-item p {
+    font-size: 0.9em;
   }
 }
