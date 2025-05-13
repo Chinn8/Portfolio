@@ -1,73 +1,66 @@
-// Improved Menu Toggle Functionality
+// Wait for DOM to fully load
 document.addEventListener('DOMContentLoaded', function() {
-    // Custom cursor elements
-    const cursor = document.createElement('div');
-    const cursorFollower = document.createElement('div');
-    cursor.className = 'cursor';
-    cursorFollower.className = 'cursor-follower';
-    document.body.appendChild(cursor);
-    document.body.appendChild(cursorFollower);
+    // Theme Toggle Functionality
+    const themeSwitch = document.getElementById('theme-switch');
+    const body = document.body;
+    const themeIcon = document.querySelector('.theme-icon');
 
-    // Custom cursor movement
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light-theme';
+    body.classList.add(savedTheme);
+    themeSwitch.checked = savedTheme === 'dark-theme';
+    themeIcon.textContent = savedTheme === 'dark-theme' ? '☀️' : '🌙';
 
-        // Add slight delay to follower for smooth effect
-        setTimeout(() => {
-            cursorFollower.style.left = e.clientX + 'px';
-            cursorFollower.style.top = e.clientY + 'px';
-        }, 50);
+    // Theme switch event listener
+    themeSwitch.addEventListener('change', () => {
+        if (themeSwitch.checked) {
+            body.classList.add('dark-theme');
+            body.classList.remove('light-theme');
+            localStorage.setItem('theme', 'dark-theme');
+            themeIcon.textContent = '☀️';
+        } else {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            localStorage.setItem('theme', 'light-theme');
+            themeIcon.textContent = '🌙';
+        }
     });
 
-    // Cursor effects on hover
-    document.querySelectorAll('a, button, .hamburger').forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'scale(1.5)';
-            cursorFollower.style.transform = 'scale(0.5)';
-        });
-
-        element.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'scale(1)';
-            cursorFollower.style.transform = 'scale(1)';
-        });
-    });
-
-    // Enhanced menu functionality
+    // Hamburger menu functionality
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.contents');
     const navLinks = document.querySelectorAll('nav ul li a');
-    const menuWidth = 250; // Width of the menu in pixels
+    const navItems = document.querySelectorAll('nav ul li');
 
-    // Variables for drag functionality
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let lastTouch = 0;
-    
-    // Function to open menu
+    // Function to open the menu
     function openMenu() {
         hamburger.classList.add('active');
         navMenu.classList.add('active');
-        navMenu.style.transform = 'translateX(0)';
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        document.body.style.overflow = 'hidden';
+        
+        // Add animation delay to each menu item
+        navItems.forEach((item, index) => {
+            item.style.transitionDelay = `${0.1 + (index * 0.05)}s`;
+        });
     }
     
-    // Function to close menu
+    // Function to close the menu
     function closeMenu() {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
-        navMenu.style.transform = `translateX(${menuWidth}px)`;
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = 'auto';
+        
+        // Reset transition delays
+        navItems.forEach(item => {
+            item.style.transitionDelay = '0s';
+        });
     }
 
     // Toggle menu on hamburger click
-    hamburger.addEventListener('click', function(event) {
-        event.stopPropagation(); // Prevent event bubbling
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event from bubbling up
         
-        if (navMenu.classList.contains('active')) {
+        if (this.classList.contains('active')) {
             closeMenu();
         } else {
             openMenu();
@@ -80,129 +73,45 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMenu();
         });
     });
+    
+    // Add touch swipe functionality for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    // Check if touch is supported
+    if ('ontouchstart' in window) {
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+    }
+    
+    function handleSwipe() {
+        // Swipe left (open menu)
+        if (touchEndX < touchStartX - 100 && !navMenu.classList.contains('active')) {
+            openMenu();
+        }
+        
+        // Swipe right (close menu)
+        if (touchEndX > touchStartX + 100 && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    }
 
     // Close menu when clicking outside
     document.addEventListener('click', function(event) {
-        const isClickInside = navMenu.contains(event.target) || hamburger.contains(event.target);
-        
+        const isClickInside = navMenu.contains(event.target) || 
+                              hamburger.contains(event.target) ||
+                              event.target.closest('.theme-toggle');
+
         if (!isClickInside && navMenu.classList.contains('active')) {
             closeMenu();
         }
     });
-
-    // Mouse drag functionality for desktop
-    navMenu.addEventListener('mousedown', (e) => {
-        if (window.innerWidth <= 768) { // Only enable dragging on mobile/tablet sizes
-            isDragging = true;
-            startX = e.clientX;
-            currentX = startX;
-            navMenu.style.transition = 'none';
-            
-            // Prevent default to avoid text selection during drag
-            e.preventDefault();
-        }
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        
-        currentX = e.clientX;
-        const diff = currentX - startX;
-        
-        // Calculate the new position (constrained to prevent dragging too far)
-        // For right-side menu, we need to ensure it doesn't go beyond the right edge
-        let newPosition = Math.min(0, Math.max(-menuWidth, diff));
-        
-        // Apply the transform
-        navMenu.style.transform = `translateX(${newPosition}px)`;
-    });
-
-    document.addEventListener('mouseup', () => {
-        if (!isDragging) return;
-        
-        isDragging = false;
-        navMenu.style.transition = 'transform 0.3s ease';
-        
-        // Determine if menu should open or close based on drag distance
-        const diff = currentX - startX;
-        const threshold = menuWidth / 3;
-        
-        if (Math.abs(diff) > threshold) {
-            // If dragged more than threshold, toggle menu state
-            if (diff < 0) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        } else {
-            // If dragged less than threshold, revert to original state
-            if (navMenu.classList.contains('active')) {
-                openMenu();
-            } else {
-                closeMenu();
-            }
-        }
-    });
-
-    // Touch functionality for mobile devices
-    navMenu.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        currentX = startX;
-        currentY = startY;
-        lastTouch = Date.now();
-        navMenu.style.transition = 'none';
-    }, { passive: true });
-
-    navMenu.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        
-        currentX = e.touches[0].clientX;
-        currentY = e.touches[0].clientY;
-        
-        // Check if the gesture is more horizontal than vertical to prevent
-        // interfering with vertical scrolling
-        const deltaX = Math.abs(currentX - startX);
-        const deltaY = Math.abs(currentY - startY);
-        
-        if (deltaX > deltaY) {
-            // Prevent scrolling when dragging horizontally
-            e.preventDefault();
-            
-            const diff = currentX - startX;
-            let newPosition = Math.min(0, Math.max(-menuWidth, diff));
-            navMenu.style.transform = `translateX(${newPosition}px)`;
-        }
-    }, { passive: false });
-
-    navMenu.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        
-        isDragging = false;
-        navMenu.style.transition = 'transform 0.3s ease';
-        
-        const diff = currentX - startX;
-        const threshold = menuWidth / 3;
-        const timeDiff = Date.now() - lastTouch;
-        const isQuickSwipe = timeDiff < 300;
-        
-        // If it's a quick swipe or dragged beyond threshold
-        if ((isQuickSwipe && Math.abs(diff) > 30) || Math.abs(diff) > threshold) {
-            if (diff < 0) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        } else {
-            // If dragged less than threshold, revert to original state
-            if (navMenu.classList.contains('active')) {
-                openMenu();
-            } else {
-                closeMenu();
-            }
-        }
-    }, { passive: true });
 
     // Close menu on window resize if it's open
     window.addEventListener('resize', function() {
@@ -210,41 +119,86 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMenu();
         }
         
-        // Reset any inline styles when switching between mobile and desktop
+        // Reset body overflow when switching to desktop view
         if (window.innerWidth > 768) {
-            navMenu.style.transform = '';
-            navMenu.style.transition = '';
+            document.body.style.overflow = 'auto';
         }
     });
+    
+    // Add escape key functionality to close menu
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+    
+    // Add backdrop click to close menu (for better mobile UX)
+    document.addEventListener('touchstart', function(e) {
+        if (navMenu.classList.contains('active')) {
+            const touchX = e.touches[0].clientX;
+            // If touch is on the left side of the screen (backdrop area)
+            if (touchX < window.innerWidth * 0.2 && window.innerWidth > 576) {
+                closeMenu();
+            }
+        }
+    }, {passive: true});
 
-    // Scroll animations
-    const animateOnScroll = () => {
-        const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
-
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementBottom = element.getBoundingClientRect().bottom;
-
-            if (elementTop < window.innerHeight && elementBottom > 0) {
-                element.classList.add('active');
+    // Add active class to nav links based on scroll position
+    const sections = document.querySelectorAll('section');
+    
+    function setActiveNavLink() {
+        let scrollPosition = window.scrollY + 100;
+        let currentActive = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                const id = section.getAttribute('id');
+                currentActive = id;
             }
         });
-    };
-
-    // Initial animation check
-    animateOnScroll();
-
-    // Check animations on scroll
-    window.addEventListener('scroll', animateOnScroll);
-
-    // Parallax effect
-    const parallaxElements = document.querySelectorAll('.parallax');
-
-    window.addEventListener('scroll', () => {
-        parallaxElements.forEach(element => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * 0.5;
-            element.style.transform = `translateY(${rate}px)`;
+        
+        // Only update if we found an active section
+        if (currentActive) {
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.classList.remove('active-link');
+                if (link.getAttribute('href') === '#' + currentActive) {
+                    link.classList.add('active-link');
+                }
+            });
+        }
+    }
+    
+    // Initial call to highlight the active section
+    setActiveNavLink();
+    
+    // Update active link on scroll with throttling for better performance
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        if (!scrollTimeout) {
+            scrollTimeout = setTimeout(function() {
+                setActiveNavLink();
+                scrollTimeout = null;
+            }, 100);
+        }
+    });
+    
+    // Add smooth scrolling to all navigation links
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70, // Adjust for navbar height
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 });
