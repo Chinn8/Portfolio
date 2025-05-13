@@ -11,12 +11,11 @@
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+<!-- Navigation Bar -->
+<nav>
+    <div class="nav-container">
+        <div class="logo">
+            <a href="#home">CN</a>
         </div>
         <ul class="contents">
             <li><a href="#home">Home</a></li>
@@ -28,7 +27,21 @@
             <li><a href="#extracircular">Extracircular</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-    </nav>
+        <div class="nav-controls">
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch">
+                <label for="theme-switch" class="theme-switch-label">
+                    <span class="theme-icon">🌙</span>
+                </label>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</nav>
     <br>
     <!-- Main Page (Home Section) -->
     <section id="home" class="mainpg parallax">
@@ -212,48 +225,8 @@
         <p>&copy; 2024 Chinni Novahu. All rights reserved.</p>
     </footer>
 
+    <script src="app.js"></script>
     <script>
-        // Hamburger menu functionality
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.contents');
-        const navLinks = document.querySelectorAll('nav ul li a');
-
-        // Toggle menu on hamburger click
-        hamburger.addEventListener('click', function () {
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Close menu when clicking on a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function (event) {
-            const isClickInside = navMenu.contains(event.target) || hamburger.contains(event.target);
-
-            if (!isClickInside && navMenu.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
-        // Close menu on window resize if it's open
-        window.addEventListener('resize', function () {
-            if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
         // Scroll animations
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
@@ -269,10 +242,18 @@
         };
 
         // Initial animation check
-        animateOnScroll();
+        document.addEventListener('DOMContentLoaded', animateOnScroll);
 
-        // Check animations on scroll
-        window.addEventListener('scroll', animateOnScroll);
+        // Check animations on scroll with throttling
+        let animationTimeout;
+        window.addEventListener('scroll', () => {
+            if (!animationTimeout) {
+                animationTimeout = setTimeout(() => {
+                    animateOnScroll();
+                    animationTimeout = null;
+                }, 100);
+            }
+        });
 
         // Parallax effect
         const parallaxElements = document.querySelectorAll('.parallax');
