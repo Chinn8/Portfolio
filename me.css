@@ -9,36 +9,62 @@ body {
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 /* Navigation Bar */
 nav {
   width: 100%;
-  height: 10vh;
+  height: 70px;
   position: fixed;
-  background-color: rgb(39, 40, 42);
-  color: white;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  background-color: var(--nav-bg);
+  color: var(--text-color);
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  padding: 0 20px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  top: 0;
+  padding: 0;
 }
 
-nav ul {
+.nav-container {
+  max-width: 1400px;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.contents {
-  width: 80%;
-  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.logo a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.logo a:hover {
+  color: #0c8bec;
+}
+
+.contents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  transition: all 0.3s ease;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul li {
@@ -50,7 +76,7 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: white;
+  color: var(--text-color);
   font-weight: 500;
   transition: all 0.3s ease;
   position: relative;
@@ -79,6 +105,359 @@ nav ul li a:hover::before {
   width: 100%;
 }
 
+/* Active link style */
+nav ul li a.active-link {
+  color: #0c8bec;
+}
+
+nav ul li a.active-link::before {
+  width: 100%;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+  transform: scale(1.05);
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-color);
+  margin: 5px 0;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  border-radius: 3px;
+  position: relative;
+  transform-origin: center;
+}
+
+/* Add a subtle animation on hover */
+.hamburger:hover span:nth-child(1) {
+  transform: translateY(-1px);
+}
+
+.hamburger:hover span:nth-child(3) {
+  transform: translateY(1px);
+}
+
+.hamburger.active span {
+  background-color: #0c8bec;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+  width: 28px;
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+  width: 28px;
+}
+
+/* Add a pulse animation to the active hamburger */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.hamburger.active {
+  animation: pulse 2s infinite;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.theme-switch-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.theme-switch-label:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.theme-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+#theme-switch {
+  display: none;
+}
+
+#theme-switch:checked + .theme-switch-label {
+  background-color: #333;
+}
+
+/* Dark Theme */
+.dark-theme {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --nav-bg: #2d2d2d;
+  --card-bg: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light Theme (default) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --nav-bg: #ffffff;
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+/* Tablet Landscape */
+@media (max-width: 1024px) {
+  nav ul li {
+    padding: 0 8px;
+  }
+  
+  .nav-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 992px) {
+  nav ul li {
+    padding: 0 5px;
+  }
+  
+  nav ul li a {
+    font-size: 0.9rem;
+  }
+  
+  .logo {
+    font-size: 1.6rem;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nav-controls {
+    gap: 10px;
+  }
+  
+  .nav-container {
+    position: relative;
+    justify-content: space-between;
+  }
+  
+  .contents {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 80%;
+    height: calc(100vh - 70px);
+    background-color: var(--nav-bg);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    padding: 30px 0;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+    z-index: 9;
+    overflow-y: auto;
+  }
+  
+  .contents.active {
+    right: 0;
+  }
+  
+  nav ul li {
+    margin: 12px 0;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition-delay: 0.1s;
+  }
+  
+  .contents.active li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Staggered animation for menu items */
+  .contents.active li:nth-child(1) { transition-delay: 0.1s; }
+  .contents.active li:nth-child(2) { transition-delay: 0.15s; }
+  .contents.active li:nth-child(3) { transition-delay: 0.2s; }
+  .contents.active li:nth-child(4) { transition-delay: 0.25s; }
+  .contents.active li:nth-child(5) { transition-delay: 0.3s; }
+  .contents.active li:nth-child(6) { transition-delay: 0.35s; }
+  .contents.active li:nth-child(7) { transition-delay: 0.4s; }
+  .contents.active li:nth-child(8) { transition-delay: 0.45s; }
+
+  nav ul li a {
+    display: block;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  /* Add overlay when menu is active */
+  .contents.active::before {
+    content: '';
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 20%;
+    height: calc(100vh - 70px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Add a subtle indicator for active menu items */
+  nav ul li a.active-link {
+    position: relative;
+  }
+  
+  nav ul li a.active-link::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #0c8bec;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 576px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+  
+  .contents {
+    width: 100%;
+    height: calc(100vh - 70px);
+    padding-top: 20px;
+  }
+  
+  .theme-toggle {
+    margin-right: 5px;
+  }
+  
+  .theme-switch-label {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .theme-icon {
+    font-size: 1.2rem;
+  }
+  
+  .nav-container {
+    padding: 0 15px;
+  }
+  
+  /* Remove overlay for full-width menu */
+  .contents.active::before {
+    display: none;
+  }
+  
+  /* Adjust hamburger position */
+  .hamburger {
+    padding-right: 0;
+  }
+  
+  /* Make menu items more prominent on small screens */
+  nav ul li {
+    margin: 10px 0;
+  }
+  
+  nav ul li a {
+    font-size: 1.2rem;
+    padding: 15px 0;
+  }
+  
+  /* Remove the dot indicator on small screens */
+  nav ul li a.active-link::after {
+    display: none;
+  }
+  
+  /* Add a background highlight instead */
+  nav ul li a.active-link {
+    background-color: rgba(12, 139, 236, 0.1);
+    border-radius: 5px;
+  }
+}
+
+/* Very Small Devices */
+@media (max-width: 375px) {
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .nav-container {
+    padding: 0 10px;
+  }
+  
+  .theme-switch-label {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .hamburger {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .hamburger span {
+    width: 22px;
+  }
+}
 /* Cursor effect */
 .cursor {
   width: 20px;
@@ -116,7 +495,7 @@ nav ul li a:hover::before {
   display: block;
   width: 25px;
   height: 3px;
-  background-color: white;
+  background-color: var(--text-color);
   margin: 5px 0;
   transition: all 0.3s ease;
 }
@@ -844,79 +1223,44 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .hamburger {
-    display: block;
+  .theme-toggle {
+    top: 20px;
+    right: 20px;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav ul li {
+    margin: 5px;
   }
 
   .contents {
     position: fixed;
     top: 0;
-    right: -250px;
-    width: 250px;
+    right: -100%;
+    width: 70%;
     height: 100vh;
-    background-color: rgb(39, 40, 42);
+    background-color: var(--nav-bg);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: right 0.3s ease, transform 0.3s ease;
+    transition: right 0.3s ease;
     padding-top: 80px;
-    transform: translateX(250px);
-    cursor: grab;
-    user-select: none;
-  }
-
-  .contents:active {
-    cursor: grabbing;
   }
 
   .contents.active {
     right: 0;
-    transform: translateX(0);
+  }
+
+  nav ul {
+    flex-direction: column;
   }
 
   nav ul li {
     margin: 15px 0;
-    opacity: 0;
-    transform: translateX(20px);
-    transition: all 0.3s ease;
-  }
-
-  .contents.active nav ul li {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* Stagger the animation for menu items */
-  .contents.active nav ul li:nth-child(1) {
-    transition-delay: 0.1s;
-  }
-
-  .contents.active nav ul li:nth-child(2) {
-    transition-delay: 0.2s;
-  }
-
-  .contents.active nav ul li:nth-child(3) {
-    transition-delay: 0.3s;
-  }
-
-  .contents.active nav ul li:nth-child(4) {
-    transition-delay: 0.4s;
-  }
-
-  .contents.active nav ul li:nth-child(5) {
-    transition-delay: 0.5s;
-  }
-
-  .contents.active nav ul li:nth-child(6) {
-    transition-delay: 0.6s;
-  }
-
-  .contents.active nav ul li:nth-child(7) {
-    transition-delay: 0.7s;
-  }
-
-  .contents.active nav ul li:nth-child(8) {
-    transition-delay: 0.8s;
   }
 
   .mainpg .text h1 {
@@ -943,35 +1287,6 @@ footer {
   .extracircular,
   .contact {
     padding: 30px 5%;
-  }
-
-  /* Hamburger Menu */
-  .hamburger {
-    display: block;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 100;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-
-  .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
   }
 
   /* Smooth scroll behavior for mobile */
@@ -1054,7 +1369,7 @@ footer {
     left: 0;
     width: 0;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2);
+    background: #f6f0f033;
     transition: width 0.1s ease;
   }
 
@@ -1072,7 +1387,7 @@ footer {
   .section-dot {
     width: 8px;
     height: 8px;
-    background: rgba(255, 255, 255, 0.3);
+    background: #e7dddd4d;
     border-radius: 50%;
     transition: all 0.3s ease;
   }
@@ -1206,30 +1521,55 @@ footer {
   }
 }
 
-/* Mobile-specific styles */
-@media (max-width: 480px) {
-  .mainpg .text h1 {
-    font-size: 1.8rem;
-  }
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
 
-  .abt2 h1,
-  .edu h1,
-  .Tech h1,
-  .projects h1,
-  .certificates-and-internships h1,
-  .extracircular h1,
-  .contact h1 {
-    font-size: 1.8em;
-  }
+.theme-switch-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: all 0.3s ease;
+}
 
-  .abt2 p,
-  .edu1 p,
-  .edu2 p,
-  .edu3 p,
-  .t1 p,
-  .project-card p,
-  .cert-item p,
-  .extra-item p {
-    font-size: 0.9em;
-  }
+.theme-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+#theme-switch {
+  display: none;
+}
+
+/* Dark Theme */
+.dark-theme {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --nav-bg: #2d2d2d;
+  --card-bg: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light Theme (default) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --nav-bg: #ffffff;
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Apply theme colors */
+nav {
+  background-color: var(--nav-bg);
 }
