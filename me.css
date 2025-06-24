@@ -650,13 +650,13 @@ nav ul li a.active-link::before {
 .abt2 h1 {
   font-size: 2.5em;
   margin-bottom: 20px;
-  color: #333;
+  color: #000000 !important; /* Fixed: Explicitly set to black */
 }
 
 .abt2 p {
   font-size: 1.1em;
   line-height: 1.8;
-  color: #333:
+  color: #000000 !important; /* Fixed: Explicitly set to black and removed typo */
 }
 
 .me1 {
@@ -813,7 +813,6 @@ nav ul li a.active-link::before {
   padding: 50px 5%;
   position: relative;
 }
-
 .Tech h1 {
   font-size: 2.5em;
   margin-bottom: 30px;
